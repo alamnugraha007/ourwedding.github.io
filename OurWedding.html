@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Undangan Pernikahan Indra & Rika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Amiri:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#000;--paper:#fff;--grey:#8a8a8a;--line:rgba(255,255,255,.28);--ease:cubic-bezier(.22,.61,.36,1)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+html{background:#1c1c1c}
+body{max-width:480px;margin:0 auto;background:#000;color:var(--paper);font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+body.locked{overflow:hidden;height:100vh}
+img,video{display:block;max-width:100%}
+.script{font-family:'Pinyon Script',cursive;font-weight:400;line-height:1.15}
+.ar{font-family:'Amiri',serif;font-size:1.5rem;line-height:2.2;direction:rtl}
+h2.script{font-size:clamp(2.6rem,11vw,3.6rem);margin-bottom:.6rem}
+p.sm{font-size:.95rem;color:var(--grey);letter-spacing:.04em}
+
+/* motif elegan */
+.dark{--mc:rgba(255,255,255,.06);--fc:rgba(255,255,255,.28)}
+.light{--mc:rgba(0,0,0,.06);--fc:rgba(0,0,0,.28)}
+.motif{background-image:linear-gradient(45deg,var(--mc) 1px,transparent 1px),linear-gradient(-45deg,var(--mc) 1px,transparent 1px);background-size:34px 34px}
+
+/* sampul */
+#cover{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+ background-color:#000;transition:opacity 1.4s var(--ease),visibility 1.4s}
+#cover.gone{opacity:0;visibility:hidden}
+#cover::before{content:"";position:absolute;inset:14px;border:1px solid var(--line);pointer-events:none}
+#cover::after{content:"";position:absolute;inset:20px;border:1px solid rgba(255,255,255,.12);pointer-events:none}
+.cover-in{max-width:420px;width:100%}
+.sq{width:min(62vw,260px);aspect-ratio:1;margin:0 auto 22px;border:1px solid #fff;padding:8px;position:relative}
+.sq .ph{width:100%;height:100%}
+#cover .t{letter-spacing:.3em;font-size:.8rem}
+#cover h1{font-size:clamp(3.4rem,17vw,5rem);margin:.2rem 0}
+#cover .guest{margin:14px 0 20px;font-size:1rem}
+#cover .guest b{display:block;font-size:1.35rem;font-weight:600;color:#fff}
+.btn{display:inline-block;background:#fff;color:#000;border:1px solid #fff;padding:12px 30px;font:inherit;font-size:1rem;letter-spacing:.08em;cursor:pointer;transition:.4s var(--ease)}
+.btn:hover{background:transparent;color:#fff}
+.light .btn{background:#000;color:#fff;border-color:#000}.light .btn:hover{background:transparent;color:#000}
+.btn.ghost{background:transparent;color:inherit;border-color:currentColor}
+.btn.ghost:hover{background:#fff;color:#000}
+.light .btn.ghost:hover{background:#000;color:#fff}
+
+/* tombol musik */
+#music{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:120;width:46px;height:46px;border-radius:50%;border:1px solid #fff;background:#000;color:#fff;font-size:18px;cursor:pointer}
+#music.spin{animation:spin 5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* halaman: selebar & setinggi layar HP */
+#cover{left:50%;right:auto;width:100%;max-width:480px;transform:translateX(-50%)}
+#music{right:max(14px,calc(50vw - 226px))}
+.sec{min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:max(52px,env(safe-area-inset-top,0px)) 22px max(48px,env(safe-area-inset-bottom,0px));text-align:center;overflow:hidden}
+.dark{background-color:#000;color:#fff}
+.light{background-color:#fff;color:#000}
+.light p.sm{color:#555}
+.in{width:100%;margin:0 auto;will-change:opacity}
+.rule{width:60px;height:1px;background:currentColor;margin:14px auto;opacity:.5}
+
+/* ph = placeholder foto */
+.ph{background:#1b1b1b;position:relative;overflow:hidden}
+.light .ph{background:#e6e6e6}
+.ph::after{content:"Foto";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#777;font-size:.9rem;letter-spacing:.2em}
+.ph img,.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+
+/* transisi masuk berbeda-beda */
+[data-a]{opacity:0;transition:opacity 1.3s var(--ease),transform 1.3s var(--ease),filter 1.3s var(--ease)}
+[data-a="up"]{transform:translateY(46px)}
+[data-a="down"]{transform:translateY(-46px)}
+[data-a="left"]{transform:translateX(-60px)}
+[data-a="right"]{transform:translateX(60px)}
+[data-a="zoom"]{transform:scale(.8)}
+[data-a="blur"]{filter:blur(14px)}
+[data-a="flip"]{transform:perspective(700px) rotateX(35deg) translateY(30px)}
+[data-a="rot"]{transform:rotate(-6deg) scale(.9)}
+[data-a].show{opacity:1;transform:none;filter:none}
+
+/* mempelai */
+.couple{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;align-items:start}
+.person .ph{width:min(100%,26svh);aspect-ratio:3/4;margin:0 auto 12px;border-radius:200px 200px 0 0;border:1px solid currentColor}
+.person h3{font-size:1.9rem}
+.person p.sm{font-size:.85rem;line-height:1.4;margin-top:4px}
+.big{font-size:clamp(3.2rem,16vw,4.4rem)}
+
+/* save the date */
+.frame{width:min(74vw,36svh);aspect-ratio:1;margin:6px auto 18px;border:1px solid #fff;padding:8px}
+.frame .ph{width:100%;height:100%}
+.frame .ph img{opacity:0;transition:opacity 1.8s ease-in-out}
+.frame .ph img.on{opacity:1}
+#cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}
+#cd div{border:1px solid var(--line);padding:10px 2px}
+#cd b{display:block;font-size:1.9rem;font-weight:600;line-height:1.1}
+#cd span{font-size:.72rem;letter-spacing:.15em;color:var(--grey)}
+
+/* acara */
+.ev{border:1px solid #000;padding:22px 16px;margin:16px 0;position:relative}
+.ev::before{content:"";position:absolute;inset:5px;border:1px solid rgba(0,0,0,.2);pointer-events:none}
+.ev h3{font-size:2.2rem}
+.ev .btn{padding:8px 22px;font-size:.9rem}
+
+/* galeri: tinggi dihitung dari tinggi layar */
+.gal{display:grid;gap:8px;margin-top:16px}
+.gal .ph{width:100%;height:100%}
+.g1{grid-template-columns:repeat(6,1fr);grid-template-rows:32svh 24svh}
+.g1 .a,.g1 .b{grid-column:span 3}.g1 .c{grid-column:span 4}.g1 .d{grid-column:span 2}
+.g2{grid-template-columns:repeat(12,1fr);grid-template-rows:24svh 32svh}
+.g2 .v{grid-column:1/7;grid-row:1/3}.g2 .a{grid-column:7/13}.g2 .b{grid-column:7/10}.g2 .c{grid-column:10/13}
+
+/* cerita: 3 bagian, tiap bagian satu layar dengan bentuk foto berbeda */
+.story .ph{margin:12px auto 18px;border:1px solid currentColor}
+.st0 .ph{width:100%;height:34svh}
+.st1 .ph{width:min(62vw,36svh);height:min(62vw,36svh);border-radius:50%}
+.st2 .ph{width:min(60vw,28svh);aspect-ratio:3/4;border-radius:200px 200px 0 0}
+.story h3{font-size:2.4rem}
+.story .yr{color:var(--grey);letter-spacing:.2em}
+
+/* hadiah */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.card{border:1px solid var(--line);padding:14px 8px}
+.card h4{font-size:1.1rem;font-weight:600}
+.card .no{font-size:1.05rem;letter-spacing:.04em;word-break:break-all}
+.card p.sm{font-size:.8rem}
+.card button{margin-top:6px;padding:5px 12px;font-size:.8rem}
+.light .card{border-color:rgba(0,0,0,.3)}
+
+/* sampul */
+.sq{width:min(60vw,30svh)}
+
+/* form */
+input,select,textarea{width:100%;padding:12px 14px;margin:6px 0;background:transparent;border:1px solid currentColor;color:inherit;font:inherit;border-radius:0}
+select option{color:#000}
+textarea{min-height:100px;resize:vertical}
+::placeholder{color:#888}
+.wishes{max-height:340px;overflow-y:auto;margin-top:22px;text-align:left;-webkit-overflow-scrolling:touch}
+.wish{border-left:2px solid currentColor;padding:6px 14px;margin-bottom:14px}
+.wish b{display:block;font-size:1.1rem}
+.wish small{color:var(--grey);font-size:.8rem}
+footer{padding:50px 20px 90px;text-align:center;background:#000}
+@media(prefers-reduced-motion:reduce){[data-a]{transition:none;opacity:1;transform:none;filter:none}}
+/* motif abstrak tak beraturan di setiap halaman */
+.sec,#cover{position:relative}
+.sec>.in,.cover-in{position:relative;z-index:1}
+.mt{position:absolute;inset:0;z-index:0;pointer-events:none;background:currentColor;opacity:.15;-webkit-mask:var(--mk) center/cover no-repeat;mask:var(--mk) center/cover no-repeat}
+.light .mt{opacity:.1}
+.mt.fl{transform:scaleX(-1)}
+.m0{--mk:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 480 900%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cpath d=%22M26.7 414.2C34.7 401.2 63.0 412.0 87.2 418.1C111.3 424.2 154.8 433.9 171.6 450.8C188.5 467.7 194.7 501.2 188.1 519.5C181.6 537.8 149.5 548.8 132.5 560.7C115.5 572.6 101.6 601.6 86.0 590.9C70.4 580.2 48.7 525.9 38.8 496.4C28.9 467.0 18.6 427.3 26.7 414.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M49.2 455.7C58.5 445.8 79.1 423.4 99.0 422.9C118.9 422.4 152.7 435.1 168.6 452.7C184.5 470.4 196.6 510.0 194.4 528.9C192.3 547.9 175.6 560.6 155.7 566.4C135.8 572.2 93.6 577.6 74.8 563.6C56.0 549.6 47.3 500.2 43.0 482.3C38.7 464.3 39.8 465.6 49.2 455.7Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M22.1 778.4C32.9 764.8 55.5 777.5 75.8 769.4C96.0 761.4 130.0 726.4 143.5 730.0C157.0 733.5 147.9 767.8 156.8 790.8C165.6 813.9 199.4 847.4 196.5 868.4C193.6 889.4 156.3 902.5 139.3 916.7C122.3 931.0 109.4 947.0 94.5 954.0C79.7 960.9 72.2 966.0 50.2 958.4C28.1 950.8 -31.3 926.3 -37.9 908.4C-44.4 890.5 0.9 872.7 10.9 851.0C20.9 829.4 11.3 792.0 22.1 778.4Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M8.8 800.0C16.4 791.4 58.1 795.6 77.6 789.0C97.1 782.4 114.8 753.3 125.8 760.5C136.7 767.7 140.3 815.7 143.1 832.4C146.0 849.1 145.0 848.6 142.8 860.7C140.5 872.9 140.4 889.3 129.7 905.3C119.0 921.2 94.4 949.5 78.4 956.4C62.4 963.4 40.8 959.2 33.6 947.1C26.5 935.0 35.9 901.4 35.7 883.7C35.4 865.9 36.6 854.4 32.1 840.4C27.7 826.5 1.2 808.5 8.8 800.0Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M267.9 579.3C262.1 592.5 260.1 604.2 242.8 610.1C225.5 615.9 186.7 620.1 164.0 614.4C141.3 608.6 116.1 593.6 106.6 575.6C97.0 557.5 102.7 523.5 106.6 506.3C110.5 489.0 115.0 475.9 129.9 472.2C144.8 468.5 171.4 474.2 196.0 484.0C220.6 493.7 265.5 514.8 277.5 530.7C289.5 546.6 273.6 566.1 267.9 579.3Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M236.5 566.9C236.8 574.3 239.2 577.8 234.6 582.0C230.0 586.2 220.0 592.7 209.1 592.0C198.1 591.3 181.9 585.2 168.7 577.8C155.5 570.4 135.9 554.9 130.0 547.7C124.0 540.4 131.0 542.7 133.0 534.2C135.0 525.6 135.5 501.2 141.9 496.5C148.4 491.8 159.0 502.3 171.6 505.7C184.2 509.1 207.4 511.6 217.6 516.9C227.8 522.2 229.7 529.3 232.9 537.6C236.0 546.0 236.2 559.5 236.5 566.9Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M343.0 710.8C352.5 709.8 372.2 718.0 381.0 722.6C389.8 727.2 399.5 734.5 395.8 738.6C392.0 742.8 371.1 746.0 358.3 747.5C345.6 749.1 325.0 751.0 319.2 747.8C313.5 744.6 319.9 734.6 323.9 728.4C327.9 722.3 333.4 711.7 343.0 710.8Z%22 fill=%22%23000%22 fill-opacity=%220.5%22/%3E%3Cpath d=%22M373.9 361.9C378.8 358.1 387.7 358.3 394.0 363.4C400.2 368.5 408.8 380.4 411.4 392.5C413.9 404.6 413.3 427.6 409.2 436.3C405.1 444.9 393.7 447.1 387.0 444.3C380.2 441.4 372.4 428.9 368.6 419.2C364.8 409.5 363.4 395.7 364.2 386.2C365.1 376.6 368.9 365.7 373.9 361.9Z%22 fill=%22%23000%22 fill-opacity=%220.6%22/%3E%3Cpath d=%22M199.1 466.6C197.5 489.1 200.5 558.3 189.9 601.7C179.3 645.1 164.6 689.1 135.4 726.9C106.2 764.8 47.8 793.3 14.6 828.9C-18.5 864.5 -64.9 899.7 -63.5 940.5C-62.1 981.4 8.6 1051.7 23.0 1073.9%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M270.6 887.2C258.6 912.5 195.8 990.5 198.4 1039.0C200.9 1087.6 270.5 1141.3 285.9 1178.5C301.3 1215.6 296.9 1235.6 290.8 1261.8C284.8 1288.1 275.1 1302.2 249.5 1335.9C223.9 1369.7 165.2 1415.9 137.2 1464.2C109.3 1512.5 91.1 1598.8 81.8 1625.8%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.9%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M449.9 624.3C467.1 653.5 532.5 763.1 553.0 799.3C573.5 835.4 559.0 823.3 573.0 841.3C587.0 859.2 634.8 872.8 636.8 907.0C638.7 941.2 593.4 1023.2 584.7 1046.5%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%22208.1%22 cy=%22794.7%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22142.0%22 cy=%22801.7%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22206.1%22 cy=%22795.7%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22236.6%22 cy=%22850.0%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22205.5%22 cy=%22792.4%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22185.7%22 cy=%22783.0%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22206.0%22 cy=%22836.4%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22180.1%22 cy=%22805.8%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22244.7%22 cy=%22742.9%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22206.4%22 cy=%22793.4%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22206.6%22 cy=%22791.0%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22200.6%22 cy=%22792.8%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22177.4%22 cy=%22830.5%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22201.7%22 cy=%22803.2%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22207.2%22 cy=%22139.8%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22210.9%22 cy=%22159.3%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22160.6%22 cy=%22120.5%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22211.1%22 cy=%22159.1%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22254.1%22 cy=%22174.3%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22176.8%22 cy=%22239.9%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22201.8%22 cy=%22162.0%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22206.4%22 cy=%22200.0%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22212.1%22 cy=%22163.1%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22229.6%22 cy=%22151.8%22 r=%223.6%22 fill=%22%23000%22/%3E%3Cpath d=%22M368.0 250.2q-8.0 5.6 -26.0 6.0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%224.2%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M368.7 590.8q-8.6 -20.2 -4.5 -43.2%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M83.1 680.4q5.8 9.6 24.5 7.0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.8%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M30.3 736.9q22.3 24.0 39.1 37.3%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%224.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E")}
+.m1{--mk:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 480 900%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cpath d=%22M347.0 511.2C317.3 530.5 257.6 580.0 224.9 562.9C192.2 545.8 158.2 445.9 151.0 408.7C143.7 371.5 167.8 364.2 181.5 339.9C195.1 315.6 204.0 270.4 232.7 263.0C261.4 255.5 327.2 282.9 353.5 295.1C379.8 307.4 382.4 310.9 390.7 336.3C399.0 361.6 410.4 418.0 403.1 447.2C395.8 476.3 376.7 491.9 347.0 511.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M296.2 462.2C282.7 461.2 291.5 475.5 278.2 467.7C265.0 459.9 233.0 429.6 216.6 415.5C200.2 401.3 181.5 398.2 179.7 382.9C177.8 367.6 193.0 334.9 205.7 323.7C218.4 312.4 239.0 323.5 255.9 315.4C272.7 307.2 295.9 271.8 306.8 274.9C317.7 278.0 316.6 314.3 321.2 334.1C325.8 354.0 327.8 370.6 334.2 393.9C340.5 417.2 365.6 462.3 359.3 473.7C353.0 485.1 309.7 463.2 296.2 462.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M304.2 460.3C286.2 460.7 259.9 436.0 242.3 425.2C224.6 414.3 205.2 406.6 198.3 395.1C191.4 383.5 191.5 364.9 200.9 355.8C210.3 346.8 234.3 342.7 255.0 340.8C275.6 339.0 312.4 338.5 325.0 344.7C337.7 351.0 326.5 365.3 330.7 378.3C334.9 391.3 354.5 409.0 350.0 422.6C345.6 436.3 322.1 459.9 304.2 460.3Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.8%22/%3E%3Cpath d=%22M193.3 242.3C198.3 258.9 193.1 286.5 184.9 306.8C176.6 327.2 156.2 352.1 143.7 364.3C131.2 376.6 129.1 376.9 109.9 380.3C90.6 383.7 49.6 401.0 28.1 384.7C6.6 368.3 -17.4 316.3 -19.3 282.0C-21.1 247.8 -0.1 196.2 16.9 179.1C33.9 162.0 59.9 174.7 82.9 179.4C106.0 184.1 136.8 196.6 155.2 207.0C173.6 217.5 188.4 225.6 193.3 242.3Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M215.5 236.8C223.3 268.3 218.7 309.1 210.9 332.5C203.1 355.9 194.6 372.1 168.7 377.3C142.9 382.5 74.5 373.0 55.7 363.7C36.8 354.4 57.5 341.9 55.7 321.7C53.9 301.6 42.5 262.1 44.8 242.8C47.1 223.6 49.4 222.7 69.3 206.1C89.2 189.6 139.7 138.3 164.1 143.4C188.4 148.5 207.7 205.2 215.5 236.8Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M88.6 446.2C91.6 419.7 124.2 368.8 129.2 342.6C134.2 316.4 102.8 304.8 118.6 289.0C134.5 273.2 192.8 251.5 224.4 247.8C256.1 244.2 285.9 251.1 308.5 267.1C331.1 283.2 357.4 311.4 360.2 344.1C363.0 376.8 337.3 431.6 325.1 463.4C312.8 495.3 306.8 530.8 286.7 535.2C266.5 539.6 233.4 495.5 204.2 489.9C175.0 484.4 130.7 509.0 111.5 501.7C92.2 494.4 85.7 472.8 88.6 446.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M127.7 445.0C122.2 426.8 117.3 396.3 124.1 366.6C130.9 336.9 152.4 280.4 168.5 266.7C184.6 253.0 195.5 277.9 220.8 284.3C246.1 290.7 305.7 284.7 320.3 304.9C335.0 325.1 313.2 372.9 308.7 405.5C304.2 438.1 307.7 481.0 293.3 500.4C278.9 519.9 245.0 526.4 222.2 522.3C199.5 518.3 172.6 488.9 156.8 476.0C141.1 463.1 133.1 463.3 127.7 445.0Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M169.8 407.9C164.1 393.2 162.3 381.2 170.3 367.7C178.3 354.2 205.9 326.3 217.9 326.9C229.8 327.5 236.1 358.7 241.9 371.1C247.6 383.4 251.4 391.2 252.3 401.1C253.3 411.1 255.6 421.8 247.6 430.9C239.6 440.0 217.4 459.8 204.5 455.9C191.5 452.1 175.5 422.6 169.8 407.9Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.8%22/%3E%3Cpath d=%22M320.5 243.1C324.7 247.6 322.4 256.5 321.9 266.3C321.3 276.1 321.6 297.5 317.1 301.8C312.7 306.2 301.9 293.8 295.1 292.4C288.2 291.0 282.7 296.8 276.3 293.5C269.8 290.2 257.4 278.8 256.4 272.6C255.4 266.3 263.7 261.4 270.4 255.9C277.1 250.3 288.1 241.5 296.5 239.3C304.9 237.2 316.3 238.6 320.5 243.1Z%22 fill=%22%23000%22 fill-opacity=%220.6%22/%3E%3Cpath d=%22M337.5 266.4C345.4 263.8 349.3 268.2 356.7 272.5C364.2 276.9 384.4 285.4 382.3 292.5C380.1 299.5 356.1 310.7 343.7 314.8C331.4 319.0 313.9 321.9 308.2 317.5C302.4 313.1 304.1 296.8 309.0 288.3C313.9 279.8 329.5 269.0 337.5 266.4Z%22 fill=%22%23000%22 fill-opacity=%220.5%22/%3E%3Cpath d=%22M486.9 782.6C482.3 797.8 446.8 846.9 459.0 873.5C471.1 900.1 524.3 909.9 559.9 942.2C595.4 974.4 641.9 1018.4 672.3 1066.8C702.8 1115.1 731.0 1204.5 742.7 1232.1%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M322.0 520.4C324.8 548.6 340.6 639.5 338.9 689.4C337.3 739.2 330.8 787.3 312.1 819.6C293.4 851.9 236.4 844.3 226.7 883.2C217.1 922.1 249.7 1024.6 254.3 1052.9%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M-3.8 828.9C9.4 837.8 65.0 844.6 75.6 882.1C86.2 919.7 81.5 995.8 59.8 1054.3C38.1 1112.7 -33.2 1184.6 -54.7 1232.8C-76.1 1281.1 -64.5 1307.3 -69.0 1343.5C-73.5 1379.6 -84.0 1416.5 -81.6 1449.8C-79.2 1483.0 -59.0 1527.3 -54.5 1542.8%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.5%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%22363.3%22 cy=%22807.2%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22369.6%22 cy=%22805.0%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22365.7%22 cy=%22800.3%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22434.7%22 cy=%22794.8%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22287.0%22 cy=%22773.2%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22383.9%22 cy=%22810.1%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22375.6%22 cy=%22807.2%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22304.4%22 cy=%22777.4%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22370.6%22 cy=%22805.2%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22370.1%22 cy=%22803.8%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22364.5%22 cy=%22805.7%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22384.9%22 cy=%22799.6%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22406.0%22 cy=%22873.9%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22368.7%22 cy=%22800.9%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22341.7%22 cy=%22407.1%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22440.1%22 cy=%22400.8%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22390.1%22 cy=%22331.5%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22350.1%22 cy=%22432.9%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22386.1%22 cy=%22367.3%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22400.9%22 cy=%22366.1%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22389.2%22 cy=%22371.6%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22377.2%22 cy=%22343.9%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22429.2%22 cy=%22343.3%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22340.5%22 cy=%22437.0%22 r=%221.4%22 fill=%22%23000%22/%3E%3Cpath d=%22M293.9 498.8q10.9 5.5 36.7 6.1%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M386.9 179.7q16.0 9.6 32.8 10.1%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M76.0 835.7q6.7 27.6 17.0 53.8%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.6%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M404.4 669.2q14.8 12.4 18.8 18.9%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.9%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E")}
+.m2{--mk:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 480 900%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cpath d=%22M244.4 840.8C202.3 827.5 119.6 867.6 91.2 848.1C62.8 828.7 75.3 769.8 74.1 724.2C72.8 678.6 50.8 604.8 84.0 574.7C117.2 544.7 229.2 535.3 273.3 543.9C317.3 552.4 315.4 602.5 348.3 626.0C381.3 649.6 454.6 662.4 471.0 685.3C487.4 708.1 467.7 722.6 446.6 763.1C425.4 803.5 377.8 915.2 344.1 928.2C310.4 941.1 286.6 854.2 244.4 840.8Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M242.2 786.5C213.4 775.4 148.0 750.4 137.7 729.2C127.3 708.1 163.1 682.3 180.1 659.4C197.0 636.5 217.0 589.8 239.5 592.1C262.0 594.4 298.6 653.0 314.9 673.3C331.1 693.7 337.8 694.0 337.0 714.4C336.2 734.8 325.8 783.5 310.0 795.5C294.2 807.5 270.9 797.5 242.2 786.5Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M245.3 788.0C227.3 785.4 185.6 754.9 174.5 743.4C163.4 731.8 175.2 730.5 178.9 718.8C182.6 707.2 189.9 686.5 196.6 673.5C203.2 660.6 207.2 643.3 219.0 641.3C230.7 639.2 247.0 657.3 267.0 661.2C287.0 665.2 328.9 657.1 339.1 664.7C349.3 672.4 331.2 689.6 328.1 707.1C325.0 724.6 328.2 761.0 320.6 769.6C313.0 778.3 295.1 755.8 282.6 758.9C270.0 762.0 263.3 790.6 245.3 788.0Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.8%22/%3E%3Cpath d=%22M374.9 455.2C339.6 448.2 299.1 409.9 278.6 386.6C258.2 363.3 253.7 335.7 252.1 315.3C250.5 295.0 247.7 289.5 268.8 264.6C289.9 239.7 350.7 169.3 378.5 166.1C406.3 162.8 409.4 222.8 435.3 245.1C461.2 267.4 520.1 277.6 534.1 299.8C548.1 322.0 526.8 356.8 519.5 378.2C512.1 399.7 514.3 415.6 490.2 428.4C466.1 441.2 410.2 462.1 374.9 455.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M359.0 368.2C341.3 361.2 332.3 354.2 315.5 343.8C298.8 333.4 259.8 318.2 258.4 306.0C257.1 293.8 292.8 276.7 307.2 270.5C321.7 264.4 326.8 269.5 345.2 269.3C363.5 269.1 399.3 264.1 417.3 269.2C435.3 274.2 445.7 289.4 452.9 299.8C460.2 310.2 466.2 317.2 460.9 331.6C455.7 346.0 438.5 380.0 421.5 386.1C404.5 392.2 376.6 375.3 359.0 368.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M71.1 556.2C61.2 514.6 93.2 445.6 118.0 412.9C142.8 380.2 193.1 360.4 219.9 360.0C246.8 359.6 246.9 393.8 279.3 410.6C311.6 427.3 392.8 439.4 414.3 460.4C435.7 481.5 429.2 514.3 408.0 537.1C386.8 559.9 325.5 576.3 287.1 597.2C248.6 618.1 213.4 669.4 177.4 662.5C141.4 655.7 81.0 597.8 71.1 556.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M163.4 517.4C158.1 503.8 173.0 491.4 176.1 475.3C179.2 459.1 171.7 429.8 181.8 420.4C191.9 411.1 222.0 417.7 236.6 419.3C251.2 420.9 258.8 421.1 269.2 430.2C279.7 439.3 295.2 462.0 299.4 473.9C303.6 485.8 299.0 482.9 294.4 501.7C289.8 520.6 280.8 572.2 271.8 586.9C262.9 601.6 251.2 594.9 240.6 589.9C230.0 584.9 221.0 568.9 208.2 556.8C195.3 544.7 168.8 531.0 163.4 517.4Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M181.8 510.8C175.5 504.7 161.6 506.3 165.4 497.0C169.1 487.7 190.0 462.2 204.2 455.0C218.4 447.9 236.3 454.7 250.6 454.0C264.8 453.4 285.7 445.4 289.6 450.9C293.4 456.4 276.2 479.1 273.8 487.2C271.3 495.2 278.0 490.7 274.8 499.3C271.5 507.9 259.5 530.4 254.4 538.6C249.2 546.9 252.3 549.7 243.8 549.0C235.2 548.2 213.5 540.3 203.2 534.0C192.9 527.6 188.1 517.0 181.8 510.8Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.8%22/%3E%3Cpath d=%22M406.7 512.1C409.3 503.3 404.3 491.0 413.9 487.2C423.5 483.4 455.9 484.7 464.0 489.4C472.2 494.1 462.0 506.7 462.7 515.5C463.3 524.2 478.8 537.7 468.1 541.8C457.3 545.9 408.2 545.1 397.9 540.1C387.7 535.2 404.0 520.9 406.7 512.1Z%22 fill=%22%23000%22 fill-opacity=%220.5%22/%3E%3Cpath d=%22M116.9 133.0C110.4 127.7 111.3 104.9 109.9 96.0C108.5 87.2 104.5 83.2 108.5 79.8C112.6 76.4 125.2 74.3 134.3 75.7C143.3 77.1 157.9 82.3 162.9 88.2C167.9 94.0 166.6 104.0 164.3 110.6C162.0 117.3 156.8 124.5 148.9 128.3C141.0 132.0 123.4 138.4 116.9 133.0Z%22 fill=%22%23000%22 fill-opacity=%220.5%22/%3E%3Cpath d=%22M397.6 792.9C378.8 805.5 286.2 845.3 284.8 868.3C283.4 891.3 383.4 900.2 389.3 931.0C395.3 961.8 330.3 1015.0 320.6 1053.1C310.9 1091.2 329.3 1131.9 331.1 1159.5C333.0 1187.2 331.5 1208.9 331.6 1218.8%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.3%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M237.8 452.1C216.4 461.9 131.3 483.3 109.6 510.5C87.9 537.7 91.1 581.5 107.7 615.1C124.3 648.6 206.4 665.8 209.0 711.8C211.6 757.9 156.1 846.3 123.3 891.4C90.5 936.5 30.8 967.2 12.2 982.4%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.0%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M147.1 867.6C137.0 883.8 104.0 927.8 86.3 965.1C68.6 1002.4 42.7 1052.7 40.9 1091.3C39.1 1129.9 50.1 1153.6 75.3 1196.7C100.5 1239.8 151.6 1302.1 192.0 1350.0C232.4 1397.8 279.6 1448.4 317.8 1483.8C356.0 1519.2 404.0 1549.3 421.3 1562.4%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.1%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%22247.1%22 cy=%22352.7%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22225.8%22 cy=%22432.9%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22262.2%22 cy=%22362.5%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22284.9%22 cy=%22318.7%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22243.9%22 cy=%22320.9%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22217.4%22 cy=%22314.8%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22325.1%22 cy=%22294.3%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22259.6%22 cy=%22355.6%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22253.3%22 cy=%22293.7%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22263.6%22 cy=%22393.5%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22301.8%22 cy=%22369.2%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22246.3%22 cy=%22285.0%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22232.3%22 cy=%22350.7%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22265.9%22 cy=%22353.0%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22258.8%22 cy=%22339.2%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22188.0%22 cy=%22311.9%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22258.5%22 cy=%22289.0%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22193.7%22 cy=%22321.1%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22103.1%22 cy=%22331.4%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22180.1%22 cy=%22321.2%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22194.8%22 cy=%22331.1%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22199.6%22 cy=%22310.6%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22202.9%22 cy=%22328.0%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22170.4%22 cy=%22293.5%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22183.3%22 cy=%22328.7%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22237.7%22 cy=%22330.9%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22157.4%22 cy=%22313.0%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22187.9%22 cy=%22309.4%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22173.8%22 cy=%22344.7%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22191.7%22 cy=%22318.2%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22173.2%22 cy=%22339.7%22 r=%222.6%22 fill=%22%23000%22/%3E%3Cpath d=%22M181.4 214.6q-23.5 -10.8 -42.1 -30.9%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%224.1%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M70.7 498.8q28.6 14.5 43.2 23.4%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M305.7 490.0q-16.9 0.8 -44.7 17.0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.6%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M360.3 148.0q1.6 27.2 9.7 51.1%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.5%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E")}
+.m3{--mk:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 480 900%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cpath d=%22M442.8 752.9C438.6 774.6 402.1 799.9 384.3 807.3C366.5 814.7 352.2 800.3 336.0 797.1C319.7 793.9 290.6 802.1 286.9 788.0C283.2 773.9 306.7 733.6 313.5 712.6C320.4 691.6 312.1 668.0 328.2 662.0C344.2 656.0 390.7 661.5 409.8 676.6C428.9 691.8 447.1 731.1 442.8 752.9Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M400.5 751.6C400.4 763.2 403.8 769.7 397.7 779.4C391.6 789.1 379.2 804.1 363.9 810.0C348.6 815.9 318.5 819.2 305.9 814.7C293.2 810.3 287.2 796.6 288.0 783.3C288.8 770.1 305.0 755.7 310.9 735.4C316.8 715.1 312.0 676.2 323.4 661.7C334.7 647.2 366.5 640.5 379.0 648.6C391.4 656.6 394.5 692.8 398.1 710.0C401.7 727.1 400.5 740.0 400.5 751.6Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M406.1 746.2C406.9 751.7 393.6 749.2 387.5 754.3C381.5 759.3 377.0 774.3 369.6 776.4C362.2 778.5 350.8 769.9 343.1 766.7C335.4 763.5 327.0 761.7 323.2 757.2C319.4 752.6 321.3 743.8 320.3 739.4C319.3 735.1 313.2 734.8 317.0 731.3C320.8 727.8 335.7 721.1 343.0 718.5C350.4 716.0 354.5 715.7 361.2 716.1C367.9 716.6 375.5 716.3 383.0 721.3C390.5 726.3 405.3 740.7 406.1 746.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.8%22/%3E%3Cpath d=%22M172.8 529.4C211.0 550.7 272.4 628.2 286.3 663.2C300.2 698.2 261.4 719.7 256.2 739.3C251.0 759.0 273.1 769.6 255.3 781.0C237.5 792.5 185.3 810.5 149.4 808.2C113.5 805.8 72.6 793.9 39.9 766.8C7.1 739.8 -42.7 672.1 -47.0 645.9C-51.4 619.8 -3.5 628.3 13.9 609.9C31.2 591.5 30.7 549.1 57.2 535.7C83.7 522.3 134.6 508.2 172.8 529.4Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M214.7 612.2C235.8 621.4 237.7 636.6 239.7 658.1C241.7 679.7 239.3 723.4 226.8 741.7C214.3 760.0 190.2 771.8 164.7 767.9C139.1 763.9 87.5 736.9 73.5 718.0C59.4 699.1 73.6 673.9 80.2 654.7C86.9 635.5 90.9 609.8 113.3 602.7C135.7 595.6 193.7 602.9 214.7 612.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M177.9 625.8C189.7 628.5 193.1 651.5 194.2 663.6C195.2 675.7 191.0 688.4 184.1 698.6C177.1 708.8 164.9 719.7 152.5 724.8C140.1 729.9 117.2 734.4 109.6 729.2C102.0 724.0 109.7 707.7 107.0 693.6C104.3 679.5 90.5 652.1 93.3 644.4C96.0 636.7 109.3 650.7 123.5 647.6C137.6 644.5 166.2 623.2 177.9 625.8Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.8%22/%3E%3Cpath d=%22M80.8 372.5C95.8 374.2 95.9 401.1 103.5 419.2C111.1 437.3 130.0 468.0 126.4 481.3C122.9 494.6 92.1 491.8 82.3 498.8C72.6 505.8 79.5 521.0 68.0 523.2C56.5 525.4 32.4 519.6 13.1 512.0C-6.1 504.4 -41.8 495.5 -47.6 477.7C-53.4 459.9 -31.9 416.7 -21.8 405.2C-11.6 393.8 -3.5 414.4 13.6 408.9C30.6 403.5 65.8 370.8 80.8 372.5Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M75.2 397.8C84.1 398.4 83.6 403.0 89.0 416.3C94.4 429.6 110.0 459.1 107.6 477.7C105.1 496.4 88.2 519.3 74.2 528.1C60.2 536.9 39.9 538.4 23.6 530.6C7.3 522.8 -19.7 494.8 -23.4 481.1C-27.0 467.5 -8.1 460.1 1.8 448.7C11.6 437.2 23.4 420.8 35.6 412.3C47.9 403.8 66.3 397.1 75.2 397.8Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M225.0 581.6C216.8 582.7 209.3 570.2 203.4 564.4C197.4 558.6 186.6 553.2 189.0 546.7C191.4 540.1 209.2 530.9 217.5 525.1C225.8 519.3 230.5 508.8 238.9 512.0C247.3 515.1 265.9 536.5 268.2 544.2C270.4 551.8 259.6 551.6 252.4 557.9C245.2 564.1 233.1 580.6 225.0 581.6Z%22 fill=%22%23000%22 fill-opacity=%220.5%22/%3E%3Cpath d=%22M443.7 333.2C440.8 342.7 438.4 364.8 432.3 368.5C426.2 372.1 412.8 360.7 406.9 354.9C401.1 349.2 393.9 344.3 397.0 334.1C400.0 323.9 416.3 297.5 425.0 293.7C433.8 289.9 446.3 304.8 449.4 311.3C452.5 317.9 446.5 323.7 443.7 333.2Z%22 fill=%22%23000%22 fill-opacity=%220.5%22/%3E%3Cpath d=%22M473.1 580.8C489.8 600.3 551.8 654.3 573.3 698.3C594.8 742.2 612.2 800.4 602.1 844.4C592.1 888.4 530.0 914.3 512.9 962.3C495.8 1010.4 516.3 1076.5 499.4 1132.7C482.6 1189.0 442.1 1250.0 412.1 1299.8C382.0 1349.5 334.6 1409.4 319.0 1431.4%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M19.6 435.2C8.7 461.2 -54.8 539.2 -46.1 591.0C-37.4 642.8 67.8 700.1 71.8 746.0C75.8 791.9 5.3 824.8 -22.0 866.6C-49.3 908.4 -80.4 975.1 -92.1 996.8%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.3%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M294.8 585.3C300.2 596.5 317.6 615.3 327.6 652.2C337.6 689.2 330.2 769.7 354.7 807.2C379.2 844.7 468.8 848.5 474.7 877.4C480.6 906.2 383.7 950.3 390.1 980.5C396.6 1010.7 492.8 1045.7 513.3 1058.7%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%22187.8%22 cy=%22113.7%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22207.3%22 cy=%2251.8%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22228.3%22 cy=%22168.1%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22265.2%22 cy=%2283.1%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22162.8%22 cy=%2297.2%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22192.4%22 cy=%2298.4%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22206.7%22 cy=%2228.4%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22192.5%22 cy=%22108.4%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22233.0%22 cy=%2260.3%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22240.2%22 cy=%22121.8%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22179.2%22 cy=%2288.5%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22190.4%22 cy=%22105.7%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22232.2%22 cy=%2288.5%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22195.2%22 cy=%22116.8%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22215.6%22 cy=%22443.8%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22215.8%22 cy=%22454.7%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22253.4%22 cy=%22493.2%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22213.7%22 cy=%22452.8%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22227.2%22 cy=%22484.8%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22182.0%22 cy=%22391.2%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22214.3%22 cy=%22455.1%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22214.6%22 cy=%22448.5%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22200.4%22 cy=%22376.6%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22299.9%22 cy=%22439.0%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22190.1%22 cy=%22432.6%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22213.7%22 cy=%22450.6%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22237.0%22 cy=%22449.9%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22211.4%22 cy=%22453.2%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22209.3%22 cy=%22411.1%22 r=%222.6%22 fill=%22%23000%22/%3E%3Cpath d=%22M192.5 776.1q30.7 -21.3 51.1 -29.6%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M380.6 745.9q30.2 5.0 51.6 5.3%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%224.1%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M214.8 773.2q7.3 -3.5 24.7 -0.2%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.2%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M184.3 132.5q4.9 -11.6 5.2 -31.1%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.1%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E")}
+.m4{--mk:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 480 900%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cpath d=%22M-42.8 56.6C-25.2 51.7 -3.4 66.5 8.7 69.8C20.9 73.2 23.3 62.4 30.2 76.7C37.0 91.0 50.8 136.9 49.6 155.8C48.4 174.7 37.8 181.0 23.0 190.2C8.1 199.4 -19.9 220.6 -39.4 211.0C-58.9 201.4 -84.5 151.1 -94.1 132.5C-103.7 113.9 -105.4 112.2 -96.9 99.5C-88.4 86.9 -60.5 61.6 -42.8 56.6Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M-61.6 38.0C-51.0 33.7 -33.2 54.7 -20.0 63.0C-6.8 71.3 4.9 75.0 17.7 87.9C30.4 100.7 59.0 126.7 56.5 140.2C54.1 153.7 19.5 161.4 2.9 168.6C-13.7 175.8 -29.9 189.9 -42.9 183.3C-55.9 176.7 -68.4 144.5 -75.2 128.8C-81.9 113.1 -85.5 104.2 -83.2 89.1C-81.0 73.9 -72.1 42.3 -61.6 38.0Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M355.7 540.1C336.0 530.3 316.1 490.9 313.9 473.5C311.7 456.1 335.8 453.7 342.4 435.5C349.1 417.2 341.9 375.5 353.8 364.1C365.6 352.6 395.3 372.5 413.6 366.8C431.9 361.2 447.7 322.5 463.7 330.1C479.6 337.8 504.7 392.1 509.4 412.8C514.0 433.5 504.6 434.4 491.7 454.3C478.9 474.2 454.8 517.9 432.1 532.2C409.5 546.5 375.4 549.9 355.7 540.1Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M399.5 507.0C391.5 501.1 384.3 488.1 378.4 476.3C372.5 464.5 365.1 452.5 364.3 436.3C363.4 420.1 365.4 389.9 373.3 378.9C381.3 368.0 402.8 379.0 412.2 370.5C421.5 362.1 424.1 325.2 429.3 328.1C434.4 331.0 436.4 371.1 443.1 387.9C449.8 404.6 466.7 409.5 469.3 428.4C472.0 447.3 466.4 487.1 459.2 501.0C452.0 514.9 436.2 510.8 426.3 511.8C416.4 512.8 407.5 512.9 399.5 507.0Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M386.3 477.2C376.8 477.7 376.6 477.3 373.7 468.7C370.8 460.0 369.4 433.5 368.7 425.3C368.0 417.2 365.2 423.5 369.3 419.9C373.5 416.3 386.3 406.7 393.5 403.7C400.7 400.8 404.3 399.3 412.4 402.3C420.5 405.2 435.6 415.8 442.2 421.5C448.8 427.2 447.7 430.5 451.8 436.6C455.8 442.7 470.0 453.3 466.4 458.2C462.9 463.0 444.0 462.6 430.6 465.8C417.3 469.0 395.8 476.7 386.3 477.2Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.8%22/%3E%3Cpath d=%22M288.2 507.9C305.8 522.4 308.8 561.1 312.7 586.2C316.7 611.4 316.9 640.9 312.0 658.7C307.1 676.4 298.6 677.5 283.4 692.7C268.1 707.8 240.2 743.7 220.3 749.4C200.3 755.2 179.6 747.7 163.7 727.3C147.7 707.0 138.9 652.0 124.5 627.3C110.1 602.7 78.2 599.0 77.2 579.2C76.2 559.5 97.0 522.3 118.7 508.9C140.3 495.6 178.9 499.3 207.1 499.1C235.4 498.9 270.6 493.4 288.2 507.9Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22/%3E%3Cpath d=%22M270.4 521.5C283.9 538.1 283.3 595.3 284.7 622.0C286.1 648.7 294.9 667.8 278.8 681.7C262.8 695.6 212.5 710.0 188.4 705.4C164.4 700.8 140.8 670.6 134.7 654.0C128.6 637.4 140.4 627.8 151.8 605.8C163.3 583.9 183.9 536.4 203.6 522.4C223.4 508.3 256.9 504.9 270.4 521.5Z%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221%22/%3E%3Cpath d=%22M372.2 74.4C377.5 78.6 384.6 93.8 385.5 99.3C386.4 104.7 383.0 103.7 377.8 107.4C372.5 111.1 360.6 123.5 354.0 121.5C347.4 119.5 341.2 101.6 338.1 95.4C335.1 89.2 333.3 88.1 335.9 84.6C338.4 81.0 347.4 76.0 353.4 74.3C359.5 72.6 366.8 70.3 372.2 74.4Z%22 fill=%22%23000%22 fill-opacity=%220.5%22/%3E%3Cpath d=%22M399.3 834.5C399.8 830.7 401.3 827.0 403.8 824.0C406.2 820.9 408.8 815.9 413.8 816.3C418.9 816.6 429.9 822.4 434.2 826.0C438.5 829.6 441.0 834.4 439.7 837.9C438.4 841.3 431.7 844.2 426.6 846.8C421.6 849.3 413.8 853.3 409.4 853.3C405.0 853.3 402.1 850.1 400.4 847.0C398.7 843.8 398.7 838.4 399.3 834.5Z%22 fill=%22%23000%22 fill-opacity=%220.6%22/%3E%3Cpath d=%22M106.0 635.2C121.1 652.2 163.5 706.5 196.5 736.9C229.5 767.4 302.9 784.0 303.7 817.9C304.6 851.8 226.3 895.0 201.8 940.3C177.4 985.6 164.5 1064.8 157.0 1089.7%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.0%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M202.4 689.4C194.2 697.2 165.7 708.2 153.6 736.1C141.6 764.0 136.5 826.5 130.0 856.9C123.4 887.2 137.7 881.1 114.5 918.1C91.2 955.0 13.8 1033.1 -9.5 1078.5C-32.8 1123.9 -22.5 1171.8 -25.1 1190.5%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M336.5 810.7C343.0 823.2 347.6 855.1 375.5 885.9C403.4 916.8 488.4 947.4 503.7 995.7C518.9 1044.1 477.8 1117.7 467.0 1176.2C456.2 1234.7 438.5 1306.5 438.9 1346.6C439.4 1386.8 476.9 1397.1 469.9 1417.0C462.9 1436.8 409.0 1457.5 396.8 1465.7%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22round%22/%3E%3Ccircle cx=%22197.5%22 cy=%22755.4%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22238.5%22 cy=%22662.6%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22239.1%22 cy=%22735.5%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22218.4%22 cy=%22750.7%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22244.7%22 cy=%22779.3%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22220.8%22 cy=%22746.2%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22206.7%22 cy=%22751.0%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22241.5%22 cy=%22742.6%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22239.4%22 cy=%22712.6%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22217.3%22 cy=%22749.3%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22220.1%22 cy=%22759.5%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22273.2%22 cy=%22797.7%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22221.0%22 cy=%22737.5%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22172.6%22 cy=%22190.5%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22208.6%22 cy=%22121.6%22 r=%222.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22211.7%22 cy=%22121.1%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22181.0%22 cy=%22187.3%22 r=%222.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22152.7%22 cy=%22102.0%22 r=%221.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22186.0%22 cy=%2253.7%22 r=%225.0%22 fill=%22%23000%22/%3E%3Ccircle cx=%22240.1%22 cy=%2296.5%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22207.7%22 cy=%22118.0%22 r=%221.4%22 fill=%22%23000%22/%3E%3Ccircle cx=%22150.6%22 cy=%22103.1%22 r=%223.6%22 fill=%22%23000%22/%3E%3Ccircle cx=%22198.7%22 cy=%22126.5%22 r=%223.6%22 fill=%22%23000%22/%3E%3Cpath d=%22M449.1 247.6q14.6 17.8 40.4 20.5%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M255.0 716.6q8.6 -15.1 18.7 -20.1%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M78.6 766.7q-5.0 19.7 -22.6 29.0%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.1%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3Cpath d=%22M240.0 587.1q10.9 7.2 10.4 25.1%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%223.8%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E")}
+.mapf{width:100%;height:170px;border:1px solid currentColor;display:block;filter:grayscale(1)}
+</style>
+</head>
+<body class="locked">
+
+<!-- SAMPUL -->
+<section id="cover" class="motif">
+ <i class="mt m4"></i>
+ <div class="cover-in">
+  <p class="t" data-c="coverTitle"></p>
+  <div class="sq"><div class="ph" id="coverPhoto"></div></div>
+  <h1 class="script">Indra &amp; Rika</h1>
+  <p class="guest">Kepada Yth. Bapak/Ibu/Saudara/i<b id="guest">Tamu Undangan</b></p>
+  <button class="btn" id="openBtn">Buka Undangan</button>
+ </div>
+</section>
+
+<button id="music" aria-label="Putar atau jeda musik">♪</button>
+<audio id="bgm" loop preload="auto"></audio>
+
+<main id="main"></main>
+
+<script>
+/* =====================================================
+   KONFIGURASI — EDIT BAGIAN INI SAJA
+   Kosongkan foto ("") untuk menampilkan kotak placeholder.
+   ===================================================== */
+const CONFIG = {
+  music: "instrumen.mp3",                       // URL file mp3, mis. "musik/lagu.mp3"
+  coverTitle: "THE WEDDING OF",
+  coverPhoto: "sampul.jpg",                  // foto bersama (kotak persegi)
+  countdownDate: "2026-10-25T08:00:00+07:00",
+  whatsapp: "6281260643361",       // nomor WA tujuan RSVP (format 62..., tanpa +)
+  /* Komentar bersama: isi dengan URL Firebase Realtime Database
+     (mis. "https://nama-proyek-default-rtdb.firebaseio.com") agar semua tamu
+     melihat ucapan yang sama. Jika kosong, ucapan hanya tersimpan di perangkat ini. */
+  firebaseURL: "",
+
+  quote: {
+    ar: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً",
+    id: "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
+    src: "QS. Ar-Rum: 21"
+  },
+  opening: "Assalamu'alaikum Warahmatullahi Wabarakatuh. Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami.",
+
+  groom: { name: "Indra Saputra Hasibuan", photo: "indra.jpg", parents: "Putra dari Bapak Alm.Bahaluddin Hasibuan & Ibu Nelly Siregar" },
+  bride: { name: "Rika Halda Siregar",     photo: "rika1.jpg", parents: "Putri dari Bapak Alm.Ali Soptu Pardamean Siregar & Ibu Romalan Hasibuan" },
+
+  slideshow: ["save1.jpg", "save2.jpg", "save3.jpg", "save4.jpg", "save5.jpg"], // 5 foto untuk kotak di atas countdown
+
+  /* map: isi koordinat, mis. "1.151245,99.766186" (paling aman), atau link Google Maps. Jangan tempel kode <iframe> berisi tanda kutip lain. */
+  akad:     { date: "Sabtu, 24 Oktober 2026", time: "08:00 WIB", place: "Kediaman Mempelai Wanita",    address: "Desa Parsombaan", map: "1.151245,99.766186" },
+  resepsi:  { date: "Minggu, 25 Oktober 2026", time: "08:00 WIB - Selesai", place: "Kediaman Mempelai Wanita", address: "Desa Parsombaan", map: "1.151245,99.766186" },
+
+  gallery1: ["gal4.jpg", "gal5.jpg", "gal6.jpg", "gal7.jpg"],      // urutan: potret, potret, LANDSCAPE, potret
+  gallery2: ["gal1.png", "gal2.png", "gal3.png"],          // 3 foto potret
+  video: { src: "Vid2.mp4", poster: "pos.JPG" },  // 1 video potret
+
+  story: [
+    { year: "2019", title: "Pertemuan", text: "Takdir mempertemukan kami dalam sebuah momen sederhana yang tak pernah kami duga akan menjadi awal segalanya.", photo: "stori.JPG" },
+    { year: "2024", title: "Mulai Serius Menjalin Hubungan",   text: "Dengan niat baik dan restu keluarga, kami melangkah ke jenjang yang lebih serius.", photo: "stori1.JPG" },
+    { year: "2026", title: "Menikah",   text: "Insya Allah kami akan menyempurnakan separuh agama dalam ikatan yang suci.", photo: "stori2.JPG" }
+  ],
+
+  gifts: {
+    banks: [
+      { bank: "Bank BRI",     no: "109701058208503", name: "Rika Halda Siregar" }
+    ],
+    wallets: [
+      { bank: "DANA",    no: "081234567890", name: "Indra Saputra Hasibuan" },
+      { bank: "GoPay",   no: "081234567891", name: "Rika Halda Siregar" }
+    ],
+    address: "Kirim hadiah ke: [Kediaman Mempelai Wanita]"
+  },
+  closing: "Merupakan kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Jazakumullahu khairan. Wassalamu'alaikum Warahmatullahi Wabarakatuh."
+};
+
+/* =====================================================
+   KODE PROGRAM
+   ===================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ph = (src, cls = "", a = "", extra = "") =>
+  `<div class="ph ${cls}" ${a ? `data-a="${a}"` : ""} ${extra}>${src ? `<img src="${esc(src)}" alt="Foto" loading="lazy" onerror="this.remove()">` : ""}</div>`;
+const C = CONFIG;
+
+/* tautan peta: terima link (panjang/pendek), kode iframe, koordinat "lat,lng", atau nama tempat.
+   Bila ada koordinat/nama tempat, peta tampil langsung di kartu (aman di WebView/browser dalam aplikasi)
+   dan tombol "Buka di Google Maps" tetap tersedia. */
+const mapBtn = (raw, e) => {
+  let u = String(raw || "").trim();
+  const s = u.match(/src\s*=\s*["']([^"']+)["']/i); if (s) u = s[1];
+  u = u.replace(/&amp;/g, "&");
+  const link = u.match(/https?:\/\/[^\s"'<>]+/i);
+  const btn = h => `<a class="btn ghost" href="${esc(h)}" target="_blank" rel="noopener">Buka di Google Maps</a>`;
+  const frame = q => `<iframe class="mapf" src="${esc(q)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
+  if (link && /google\.[a-z.]+\/maps\/embed/i.test(link[0])) return frame(link[0]);
+  const c = u.match(/(-?\d{1,3}\.\d{3,})\s*,\s*(-?\d{1,3}\.\d{3,})/) || u.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
+  let q = "";
+  if (c) q = c[1] + "," + c[2];
+  else if (link) return btn(link[0]);                       /* link pendek: hanya tombol */
+  else if (/^(www\.)?(maps\.app\.goo\.gl|goo\.gl|google\.[a-z.]+|maps\.google\.[a-z.]+)\//i.test(u)) return btn("https://" + u);
+  else q = u || [e.place, e.address].filter(x => x && !/^\[.*\]$/.test(x)).join(" ");
+  if (!q) return "";
+  const enc = encodeURIComponent(q);
+  return frame(`https://maps.google.com/maps?q=${enc}&z=16&output=embed`) + `<div style="margin-top:10px">${btn("https://www.google.com/maps/search/?api=1&query=" + enc)}</div>`;
+};
+const evCard = (t, e, a) => `
+ <div class="ev" data-a="${a}">
+  <h3 class="script">${t}</h3><div class="rule"></div>
+  <p>${e.date}</p><p><b>${e.time}</b></p>
+  <p style="margin-top:10px">${e.place}</p><p class="sm" style="margin-bottom:14px">${e.address}</p>${mapBtn(e.map, e)}
+ </div>`;
+const acct = (g, a) => `
+ <div class="card" data-a="${a}">
+  <h4>${esc(g.bank)}</h4><div class="no">${esc(g.no)}</div><p class="sm">a.n. ${esc(g.name)}</p>
+  <button class="btn ghost" data-copy="${esc(g.no)}">Salin Nomor</button>
+ </div>`;
+
+let _n = 0;
+const S = (cls, inner) => { const k = _n++; return `<section class="sec ${cls}"><i class="mt m${k % 5}${k % 2 ? " fl" : ""}"></i><div class="in">${inner}</div></section>`; };
+$("#main").innerHTML =
+S("dark motif", `
+ <p class="ar" data-a="blur">${C.quote.ar}</p>
+ <div class="rule" data-a="zoom"></div>
+ <p data-a="up"><i>${C.quote.id}</i></p>
+ <p class="sm" data-a="up" style="margin-top:12px">${C.quote.src}</p>`) +
+S("light", `
+ <h2 class="script" data-a="down">Bismillah</h2>
+ <p data-a="left">${C.opening}</p>
+ <div class="couple">
+  <div class="person">${ph(C.groom.photo, "", "zoom")}<h3 class="script" data-a="right">${C.groom.name}</h3><p class="sm" data-a="up">${C.groom.parents}</p></div>
+  <div class="person">${ph(C.bride.photo, "", "zoom")}<h3 class="script" data-a="left">${C.bride.name}</h3><p class="sm" data-a="up">${C.bride.parents}</p></div>
+ </div>`) +
+S("dark motif", `
+ <h2 class="script" data-a="down">Save The Date</h2>
+ <div class="frame" data-a="zoom"><div class="ph" id="slides">${C.slideshow.map(x => x ? `<img src="${esc(x)}" alt="Foto" onerror="this.remove()">` : "").join("")}</div></div>
+ <p data-a="up">Minggu, 25 Oktober 2026</p>
+ <div id="cd" data-a="flip"><div><b id="d">0</b><span>HARI</span></div><div><b id="h">0</b><span>JAM</span></div><div><b id="m">0</b><span>MENIT</span></div><div><b id="s">0</b><span>DETIK</span></div></div>`) +
+S("light", `
+ <h2 class="script" data-a="blur">Waktu &amp; Tempat</h2>
+ ${evCard("Akad Nikah", C.akad, "left")}
+ ${evCard("Resepsi", C.resepsi, "right")}`) +
+S("dark", `
+ <h2 class="script" data-a="down">Galeri</h2>
+ <div class="gal g1">
+  ${ph(C.gallery1[0], "a", "left")}${ph(C.gallery1[1], "b", "right")}
+  ${ph(C.gallery1[2], "c", "zoom")}${ph(C.gallery1[3], "d", "up")}
+ </div>`) +
+S("light", `
+ <h2 class="script" data-a="down">Momen Kami</h2>
+ <div class="gal g2">
+  <div class="ph v" data-a="flip">${C.video.src ? `<video src="${esc(C.video.src)}" poster="${esc(C.video.poster)}" controls playsinline preload="metadata"></video>` : ""}</div>
+  ${ph(C.gallery2[0], "a", "rot")}${ph(C.gallery2[1], "b", "left")}${ph(C.gallery2[2], "c", "blur")}
+ </div>`) +
+C.story.map((x, i) => S((i % 2 ? "light" : "dark motif") + " story st" + (i % 3), `
+ ${i === 0 ? `<h2 class="script" data-a="down">Our Love Story</h2>` : ""}
+ <p class="yr" data-a="up">${x.year}</p>
+ ${ph(x.photo, "", ["left", "zoom", "right"][i % 3])}
+ <h3 class="script" data-a="up">${x.title}</h3>
+ <p data-a="blur">${x.text}</p>`)).join("") +
+S("light motif", `
+ <h2 class="script" data-a="down">Wedding Gift</h2>
+ <p class="sm" data-a="up">Doa restu Anda adalah hadiah terindah. Bila berkenan memberi tanda kasih:</p>
+ <div class="cards">${[...C.gifts.banks, ...C.gifts.wallets].map((g, i) => acct(g, ["left", "right", "flip", "zoom"][i % 4])).join("")}</div>
+ <p class="sm" data-a="up">${C.gifts.address}</p>`) +
+S("dark", `
+ <h2 class="script" data-a="down">RSVP</h2>
+ <div data-a="up">
+  <input id="rName" placeholder="Nama Anda">
+  <select id="rAtt"><option>Hadir</option><option>Tidak Hadir</option><option>Masih Ragu</option></select>
+  <select id="rNum"><option>1 orang</option><option>2 orang</option><option>3 orang</option><option>4 orang</option></select>
+  <button class="btn" id="rBtn" style="margin-top:10px">Kirim via WhatsApp</button>
+ </div>`) +
+S("light motif", `
+ <h2 class="script" data-a="down">Ucapan &amp; Doa</h2>
+ <div data-a="zoom">
+  <input id="wName" placeholder="Nama Anda" maxlength="40">
+  <textarea id="wMsg" placeholder="Tulis ucapan dan doa" maxlength="400" style="min-height:76px"></textarea>
+  <button class="btn" id="wBtn" style="margin-top:6px">Kirim Ucapan</button>
+ </div>
+ <div class="wishes" id="wishes" style="max-height:28svh"></div>`) +
+S("dark", `
+ <p data-a="blur">${C.closing}</p>
+ <h2 class="script big" data-a="up" style="margin-top:22px">Indra &amp; Rika</h2>`);
+
+/* sampul */
+document.querySelector('[data-c="coverTitle"]').textContent = C.coverTitle;
+$("#coverPhoto").innerHTML = C.coverPhoto ? `<img src="${esc(C.coverPhoto)}" alt="Indra & Rika" onerror="this.remove()">` : "";
+$("#cover").classList.add("motif");
+const to = new URLSearchParams(location.search).get("to");
+if (to) $("#guest").textContent = to;
+
+/* musik */
+const bgm = $("#bgm"), mb = $("#music");
+if (C.music) bgm.src = C.music;
+const setM = on => { mb.classList.toggle("spin", on); mb.textContent = on ? "♪" : "✕"; };
+setM(false); mb.textContent = "♪";
+mb.onclick = () => {
+  if (!C.music) return;
+  if (bgm.paused) bgm.play().then(() => setM(true)).catch(() => {}); else { bgm.pause(); setM(false); mb.textContent = "♪"; }
+};
+
+/* buka undangan */
+$("#openBtn").onclick = () => {
+  $("#cover").classList.add("gone");
+  document.body.classList.remove("locked");
+  window.scrollTo(0, 0);
+  if (C.music) bgm.play().then(() => setM(true)).catch(() => {});
+  setTimeout(observe, 400);
+};
+
+/* animasi muncul */
+function observe() {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll("[data-a]").forEach(el => io.observe(el));
+}
+
+/* halaman lama memudar perlahan saat berganti halaman */
+const secs = [...document.querySelectorAll(".sec .in")];
+let tick = false;
+function fade() {
+  const vh = innerHeight;
+  secs.forEach(el => {
+    const b = el.parentElement.getBoundingClientRect().bottom;
+    el.style.opacity = Math.max(0, Math.min(1, b / (vh * .55)));
+  });
+  tick = false;
+}
+addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(fade); } }, { passive: true });
+fade();
+
+/* slideshow: bingkai diam, hanya foto yang berganti */
+const imgs = [...document.querySelectorAll("#slides img")];
+if (imgs.length) {
+  let i = 0; imgs[0].classList.add("on");
+  setInterval(() => { imgs[i].classList.remove("on"); i = (i + 1) % imgs.length; imgs[i].classList.add("on"); }, 4000);
+}
+
+/* countdown */
+const target = new Date(C.countdownDate).getTime();
+function cd() {
+  let t = Math.max(0, target - Date.now());
+  const p = n => String(n).padStart(2, "0");
+  $("#d").textContent = Math.floor(t / 864e5);
+  $("#h").textContent = p(Math.floor(t % 864e5 / 36e5));
+  $("#m").textContent = p(Math.floor(t % 36e5 / 6e4));
+  $("#s").textContent = p(Math.floor(t % 6e4 / 1e3));
+}
+cd(); setInterval(cd, 1000);
+
+/* salin rekening */
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-copy]"); if (!b) return;
+  const done = () => { b.textContent = "Tersalin ✓"; setTimeout(() => b.textContent = "Salin Nomor", 1800); };
+  navigator.clipboard ? navigator.clipboard.writeText(b.dataset.copy).then(done) : done();
+});
+
+/* RSVP ke WhatsApp */
+$("#rBtn").onclick = () => {
+  const n = $("#rName").value.trim();
+  if (!n) { $("#rName").focus(); return; }
+  const msg = `Assalamu'alaikum, saya ${n}. Konfirmasi kehadiran di pernikahan Indra & Rika: ${$("#rAtt").value}, jumlah tamu: ${$("#rNum").value}.`;
+  window.open(`https://wa.me/${C.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+};
+
+/* ucapan & doa (terlihat semua tamu bila firebaseURL diisi) */
+const LS = "wishes_indra_rika";
+async function loadW() {
+  let list = [];
+  try {
+    if (C.firebaseURL) {
+      const r = await fetch(C.firebaseURL.replace(/\/$/, "") + "/wishes.json");
+      const o = await r.json() || {};
+      list = Object.values(o);
+    } else list = JSON.parse(localStorage.getItem(LS) || "[]");
+  } catch (e) { try { list = JSON.parse(localStorage.getItem(LS) || "[]"); } catch (_) {} }
+  list.sort((a, b) => b.t - a.t);
+  $("#wishes").innerHTML = list.length ? list.map(w =>
+    `<div class="wish"><b>${esc(w.n)}</b><p>${esc(w.m)}</p><small>${new Date(w.t).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</small></div>`).join("")
+    : `<p class="sm" style="text-align:center">Belum ada ucapan. Jadilah yang pertama.</p>`;
+}
+$("#wBtn").onclick = async () => {
+  const n = $("#wName").value.trim(), m = $("#wMsg").value.trim();
+  if (!n || !m) return;
+  const w = { n, m, t: Date.now() };
+  try {
+    if (C.firebaseURL) await fetch(C.firebaseURL.replace(/\/$/, "") + "/wishes.json", { method: "POST", body: JSON.stringify(w) });
+    else { const l = JSON.parse(localStorage.getItem(LS) || "[]"); l.push(w); localStorage.setItem(LS, JSON.stringify(l)); }
+  } catch (e) {}
+  $("#wMsg").value = ""; loadW();
+};
+loadW();
+</script>
+</body>
+</html>
